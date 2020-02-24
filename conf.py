@@ -46,8 +46,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Runestone Interactive Overview'
-copyright = '2017 shoop'
+project = 'Parallel Computing for Beginners'
+copyright = '2020 CSinParallel'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -210,10 +210,10 @@ html_theme_path = [pkg_resources.resource_filename('runestone', 'common/project_
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = 'Runestone Interactive Overview'
+html_title = 'Parallel Computing for Beginners'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title ='Runestone Interactive Overview'
+html_short_title ='Parallel Computing for Beginners'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
@@ -274,7 +274,7 @@ html_show_sourcelink = False
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'PythonCoursewareProjectdoc'
+htmlhelp_basename = 'ParallelCS1CS2Bookdoc'
 
 # 'accessibility_style' config value is defined in the 'accessibility' extension.
 # By this config value you can select what accessibility stylesheet
