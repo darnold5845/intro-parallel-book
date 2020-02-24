@@ -10,6 +10,5 @@ Table of Contents
    :maxdepth: 2
 
    front_matter/title
-   front_matter/preface
 
-   intro.rst
+   introduction/intro.rst
