@@ -9,6 +9,7 @@ Table of Contents
 .. toctree::
    :maxdepth: 2
 
-   front_matter/title.rst
+   front_matter/title
+   front_matter/preface
 
    intro.rst

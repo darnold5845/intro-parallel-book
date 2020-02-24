@@ -1,10 +1,10 @@
 
-
+========================
 CHAPTER 0: Introduction
 ========================
 
 0.1 What is Parallel Computing?
----------------------------------
+===============================
 
 This section contains a brief history of parallel computing, and its modern uses. Questions that we should be answering:
 
@@ -14,7 +14,7 @@ This section contains a brief history of parallel computing, and its modern uses
 
 
 0.2 Important Concepts
------------------------
+========================
 
 Before we continue, let's define some important concepts...
 
@@ -28,7 +28,7 @@ Before we continue, let's define some important concepts...
 
 
 0.3 Getting Access to a Parallel System
-----------------------------------------
+=======================================
 
 
 Runestone uses the ``restructuredText`` (rst) markup language.  We chose this over markdown largely because rst is extensible.  Nearly all of the basic markup tasks are already handled by restructuredText.  You should check out the docs for the basics of restructuredText (link below). Our extensions are all for the interactive elements.  One key hint about restructuredText:  Its like **Python** -- *indentation matters!*
