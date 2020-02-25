@@ -19,3 +19,4 @@ Table of Contents
 
    commonAlgorithms/index.rst
 
+   furtherAvenues/index.rst
