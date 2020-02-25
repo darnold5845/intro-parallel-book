@@ -28,7 +28,7 @@ Some code examples below
 ActiveCode
 **********
 
-.. activecode:: codeexample1
+.. activecode:: code_example
    :coach:
    :caption: This is a caption
 

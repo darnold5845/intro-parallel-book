@@ -12,3 +12,5 @@ Table of Contents
    front_matter/title
 
    introduction/intro.rst
+
+   sharedMemory/index.rst
