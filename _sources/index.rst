@@ -14,3 +14,5 @@ Table of Contents
    introduction/intro.rst
 
    sharedMemory/index.rst
+
+   messagePassing/index.rst
