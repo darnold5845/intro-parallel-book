@@ -16,3 +16,6 @@ Table of Contents
    sharedMemory/index.rst
 
    messagePassing/index.rst
+
+   commonAlgorithms/index.rst
+
