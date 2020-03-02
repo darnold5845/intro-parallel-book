@@ -14,7 +14,7 @@ paver.setuputils.install_distutils_tasks()
 sys.path.append(os.getcwd())
 
 # The project name, for use below.
-project_name = 'IntroParallelBook'
+project_name = 'PDCBeginners'
 
 master_url = 'http://127.0.0.1:8000'
 if not master_url:
@@ -39,8 +39,8 @@ options(
             'course_title': project_name,
             'python3': 'true',
             'dburl': '',
-            'default_ac_lang': 'cpp',
-            'jobe_server': 'http://jobe2.cosc.canterbury.ac.nz',
+            'default_ac_lang': 'c',
+            'jobe_server': 'http://jobe.calvin.edu',
             'proxy_uri_runs': '/jobe/index.php/restapi/runs/',
             'proxy_uri_files': '/jobe/index.php/restapi/files/',
             'downloads_enabled': 'false',

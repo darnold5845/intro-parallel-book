@@ -47,7 +47,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Parallel Computing for Beginners'
-copyright = '2020 CSinParallel'
+copyright = '2020 CSinParallel (Joel Adams, Richard Brown, Suzanne Matthews, Elizabeth Shoop)'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
