@@ -39,7 +39,7 @@ options(
             'course_title': project_name,
             'python3': 'true',
             'dburl': '',
-            'default_ac_lang': 'python',
+            'default_ac_lang': 'cpp',
             'jobe_server': 'http://jobe2.cosc.canterbury.ac.nz',
             'proxy_uri_runs': '/jobe/index.php/restapi/runs/',
             'proxy_uri_files': '/jobe/index.php/restapi/files/',
