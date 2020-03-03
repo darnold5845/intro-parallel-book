@@ -16,7 +16,7 @@ Use analogy or unplugged activity to remind users how shared memory computations
 .. toctree::
     :maxdepth: 2
 
-    firsteps.rst
+    firststeps.rst
     racecond.rst
     reduction.rst
     performance.rst

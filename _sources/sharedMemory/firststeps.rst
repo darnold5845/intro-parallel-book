@@ -8,50 +8,182 @@ shared memory systems, we choose OpenMP due to its pervasiveness and relative ea
 OpenMP employs a series of compiler directives to enable users to incrementally add 
 parallelism to their programs and is natively supported by GCC. 
 
+1.1.1 The Fork-Join Pattern
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 As a means of introducing OpenMP, we begin by introducing the **fork-join pattern** for parallel programming.
-In fork-join, the main thread "forks" (or creates) a series of threads that all perform the same task in parallel.
+
+.. image:: images/ForkJoin.png
+
+In fork-join, the main thread "forks" (or creates) a series of threads that each perform a separate task in parallel.
 When each thread terminates, their executions "join" (or merge) together back into the main thread.
 
 Consider the following serial program. What is its output?
 
-**Listing 3**
 
-.. _lst_showmethod:
+.. _lst_sm_fork_join_serial:
 
-.. activecode:: showmethod
+.. activecode:: sm_fork_join_serial
   :language: cpp
-  :caption: Show method implementation
+  :caption: Serial Fork-Join
 
-  //using functions to print fractions to the command line.
-  #include <iostream>
-  using namespace std;
+  #include <stdio.h>     // printf()
+  #include <omp.h>       // OpenMP
 
-  class Fraction {
-      public:
-          Fraction(int top = 0, int bottom = 1){
-              num = top;
-              den = bottom;
-          }
-          void show(){
-              cout << num << "/" << den << endl;
-          }
-      private:
-          int num, den;
-  };
+  int main(int argc, char** argv) {
 
-  int main() {
-      Fraction fraca(3, 5);
-      Fraction fracb(3);
-      Fraction fracc; //notice there are no parentheses here.
-      // cout << fraca << endl; //uncomment to see error
-      fraca.show();
-      fracb.show();
-      fracc.show();
+      printf("\nBefore...\n");
+
+  //    #pragma omp parallel 
+      printf("\nDuring...");
+
+      printf("\n\nAfter...\n\n");
+
       return 0;
   }
-  
-Walk through fork-join patternlet and use output to motivate a discussion of thread execution and 
-to define non-determinism.
+
+
+The above code simply prints out the strings ``Before``, ``During`` and ``After`` in order. 
+
+The ``omp parallel pragma`` on line 8, when uncommented, tells the compiler to fork a set of threads to execute the next line of code
+(later you will see how this is done for a block of code). Observe what happens when the pragma is uncommented:
+
+.. _lst_sm_fork_join_parallel:
+
+.. activecode:: sm_fork_join_parallel
+  :language: cpp
+  :caption: Parallel Fork-Join
+
+  #include <stdio.h>     // printf()
+  #include <omp.h>       // OpenMP
+
+  int main(int argc, char** argv) {
+
+      printf("\nBefore...\n");
+
+      #pragma omp parallel  //this line is now uncommented!
+      printf("\nDuring...");
+
+      printf("\n\nAfter...\n\n");
+
+      return 0;
+  }
+
+
+In the above example, the ``omp parallel pragma`` creates a team of threads and directs each thread to run the line ``printf(\nDuring...)`` in parallel.
+Thus, the string ``During`` is printed out a number of times that correspond to the number cores on the system (in this case, 4). Note that in OpenMP the 
+join is implicit and does not require a pragma directive. 
+
+1.1.2 The SPMD Pattern
+^^^^^^^^^^^^^^^^^^^^^^
+
+A common use of the fork-join pattern is to have each thread run the same block of code on different components of data. This pattern is known as 
+**single program multiple data** or the **SPMD** pattern. Let's try running a new code snippet:
+
+.. _lst_sm_spmd_serial:
+
+.. activecode:: sm_spmd_serial
+   :language: cpp
+   :caption: SPMD (serial)
+
+   #include <stdio.h>
+   #include <omp.h>
+
+   int main(int argc, char** argv) {
+      printf("\n");
+
+      //    #pragma omp parallel 
+      {
+          int id = omp_get_thread_num();
+          int numThreads = omp_get_num_threads();
+          printf("Hello from thread %d of %d\n", id, numThreads);
+      }
+
+      printf("\n");
+      return 0;
+   }
+
+When the ``omp parallel`` pragma executes, it assigns each thread a unique id (from ``0`` to ``n-1`` for *n* threads). 
+A programmer can access this unique id by calling the ``omp_get_thread_num()`` function. Likewise, OpenMP provides the 
+``omp_get_num_threads()`` function to provide the programmer the ability to see the total number of threads.
+On a single threaded program (like the one shown above), there is 1 total thread, with a thread id of ``0``.
+
+Consider what will happen when the pragma above is uncommented (recall that there are ``4`` total cores on the system).
+What do you think the output would be?
+
+
+.. mchoice:: sm_mc_spmd_1
+    :correct: c
+    :answer_a: There will be 4 hello messages, each having the thread id 0
+    :answer_b: There will be 4 hello messages, each having different thread ids, printed in order
+    :answer_c: There will be 4 hello messages, each having different thread ids, printed in random order
+    :answer_d: Something else
+    :feedback_a: Recall that each thread is assigned a unique id.
+    :feedback_b: This seems like the correct answer, but it is not (see below).
+    :feedback_c: This is in fact the correct answer (do you know why?).
+    :feedback_d: Actually, the correct answer is one of the listed options!
+
+    What will be the output when the pragma is uncommented in the spmd_serial program?
+
+Let's now run a version of the program with the ``omp parallel`` pragma uncommented:
+
+.. _lst_sm_spmd_parallel:
+
+.. activecode:: sm_spmd_parallel
+   :language: cpp
+   :caption: SPMD (parallel)
+
+   #include <stdio.h>
+   #include <omp.h>
+
+   int main(int argc, char** argv) {
+      printf("\n");
+
+      #pragma omp parallel //this line is now uncommented!
+      {
+          int id = omp_get_thread_num();
+          int numThreads = omp_get_num_threads();
+          printf("Hello from thread %d of %d\n", id, numThreads);
+      }
+
+      printf("\n");
+      return 0;
+   }
+
+Running this program reveals two things. First, since there are 4 total cores on the system, the ``omp parallel``
+pragma generates a team of 4 threads, assigning each a unique id from 0 to 3. Each thread then runs the code 
+in the scope of the pragma (denoted by curly braces). The process can be visualized as follows:
+
+.. image:: images/ForkJoin_SPMD.png
+
+The code in main up until line 6 is run in one thread on one core; the forking of separate threads to run the code
+between lines 7 and 12 is shown in the middle of the diagram. The final last couple of lines of code are run back in
+the single thread 0 after all the threads have completed and join back to the main thread.
+
+.. mchoice:: sm_mc_spmd_2
+    :correct: b
+    :answer_a: The hello messages always print in order (0 .. 3)
+    :answer_b: The ordering of the hello messages is random and cannot be predicted.
+    :answer_c: The hello messages always prints in a random order, but is consistent over multiple runs
+    :feedback_a: Try running the program a few more times.
+    :feedback_b: Correct!
+    :feedback_c: Try running the program a few more times. Is the order always the same?
+
+    Try re-running the sm_spmd_parallel example a few times. What do you observe about the order of the printed lines?
+
+
+Re-running the program multiple times illustrates an important point about threaded programs: 
+the ordering of execution of statements between threads is *not* guaranteed. In fact, the order in which any set of 
+threads execute is not guaranteed, and is determined by the Operating System. This situation illustrates the concept 
+of **non-determinism**, where an algorithm or program can have different outputs over multiple runs. While all 
+parallel algorithms have inherent non-deterministic properties, experienced programmers can *leverage* the non-deterministic
+execution to their advantage (e.g. run the code on multiple cores) and still get correct output. We will study several such 
+examples in the coming sections.  
+
+1.1.3 A Larger Program - Parallel Array
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 
 Introduce the SPMD patternlet, and define what single program multiple data is, and how it relates 
 to the notion of data parallelism. As an example, 
