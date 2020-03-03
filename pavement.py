@@ -23,7 +23,7 @@ if not master_url:
 # The root directory for ``runestone serve``.
 serving_dir = "./build/" + project_name
 # The destination directory for ``runestone deploy``.
-dest = "./static"
+dest = "/var/www/html/pdcbook/"
 
 options(
     sphinx=Bunch(docroot=".",),
@@ -40,7 +40,7 @@ options(
             'python3': 'true',
             'dburl': '',
             'default_ac_lang': 'cpp',
-            'jobe_server': 'http://jobe.calvin.edu',
+            'jobe_server': 'https://jobe.calvin.edu',
             'proxy_uri_runs': '/jobe/index.php/restapi/runs/',
             'proxy_uri_files': '/jobe/index.php/restapi/files/',
             'downloads_enabled': 'false',
