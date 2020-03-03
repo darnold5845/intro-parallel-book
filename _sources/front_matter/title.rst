@@ -8,31 +8,28 @@ About Parallel Computing for Beginners
 Contributors
 ------------
 
-Editors
-*********
-Joel C. Adams, Calvin University
+*Parallel Computing for Beginners* is maintained and edited by Joel C. Adams (Calvin University), Richard A. Brown (St. Olaf College), Suzanne J. Matthews (West Point) and Elizabeth Shoop (Macalester College).
+Adams, Brown, Matthews and Shoop form the leadership team for CSinParallel, an NSF-funded initiative for broadening the exposure of parallel computing in the undergraduate computing curriculum. 
 
-Richard Brown, St. Olaf College
-
-Suzanne J. Matthews, West Point
-
-Elizabeth Shoop, Macelester College
 
 
 Contributing Authors
-***************************
-Joel C. Adams, Calvin University
+*********************
+In addition, we would like to acknowledge the contributions of the following authors:
 
-Richard Brown, St. Olaf College
+* Joel C. Adams, Calvin University
 
-Suzanne J. Matthews, West Point
+* Richard Brown, St. Olaf College
 
-Elizabeth Shoop, Macelester College
+* Suzanne J. Matthews, West Point
+
+* Elizabeth Shoop, Macelester College
 
 
 Acknowledgements
-***************************
+----------------
 
+This work is sponsored by National Science Foundation (NSF) Collaborative Research Grants DUE-1822480/1822486/1855761. Collaborative Research: CSinParallel: Experiential Learning of Parallel and Distributed Computing through Sight, Sound, and Touch. 
 
 Copyright Statement
 --------------------
