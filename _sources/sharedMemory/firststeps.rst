@@ -24,7 +24,9 @@ Consider the following serial program. What is its output?
 .. _lst_sm_fork_join_serial:
 
 .. activecode:: sm_fork_join_serial
-  :language: cpp
+  :language: c
+  :compileargs: ['-Wall', '-ansi', '-pedantic', '-std=c99']
+  :linkargs: ['-fopenmp']
   :caption: Serial Fork-Join
 
   #include <stdio.h>     // printf()
@@ -51,7 +53,9 @@ The ``omp parallel pragma`` on line 8, when uncommented, tells the compiler to f
 .. _lst_sm_fork_join_parallel:
 
 .. activecode:: sm_fork_join_parallel
-  :language: cpp
+  :language: c
+  :compileargs: ['-Wall', '-ansi', '-pedantic', '-std=c99']
+  :linkargs: ['-fopenmp']
   :caption: Parallel Fork-Join
 
   #include <stdio.h>     // printf()
