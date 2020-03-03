@@ -23,7 +23,7 @@ Consider the following serial program. What is its output?
 
 .. _lst_sm_fork_join_serial:
 
-.. activecode:: sm_fork_join_serial
+.. activecode:: sm_fork_join
   :language: c
   :compileargs: ['-Wall', '-ansi', '-pedantic', '-std=c99']
   :linkargs: ['-fopenmp']
@@ -47,34 +47,25 @@ Consider the following serial program. What is its output?
 
 The above code simply prints out the strings ``Before``, ``During`` and ``After`` in order. 
 
-The ``omp parallel pragma`` on line 8, when uncommented, tells the compiler to fork a set of threads to execute the next line of code
-(later you will see how this is done for a block of code). Observe what happens when the pragma is uncommented:
+Now *uncomment* the ``omp parallel pragma`` on line 8 and re-run the program.
 
-.. _lst_sm_fork_join_parallel:
+.. mchoice:: sm_mc_fork_1
+    :correct: c
+    :answer_a: Nothing happens. It's the same output.
+    :answer_b: The three strings ``Before``, ``During`` and ``After`` are printed multiple times.
+    :answer_c: The string ``During`` is printed multiple times.
+    :answer_d: The strings ``During`` and ``After`` are printed multiple times.
+    :feedback_a: Did you remember to uncomment the pragma on line 8? Try again.
+    :feedback_b: This is not correct. Try uncommenting the pragma and re-running the code!
+    :feedback_c: Correct! The string ``During`` is printed 4 times (do you know why?).
+    :feedback_d: Close, but not quite. Try uncommenting the pragma and re-running the code!
 
-.. activecode:: sm_fork_join_parallel
-  :language: c
-  :compileargs: ['-Wall', '-ansi', '-pedantic', '-std=c99']
-  :linkargs: ['-fopenmp']
-  :caption: Parallel Fork-Join
+    What happens when you re-run the example?
 
-  #include <stdio.h>     // printf()
-  #include <omp.h>       // OpenMP
+The ``omp parallel pragma`` on line 8, when uncommented, tells the compiler to fork a set of threads to execute the next *line* of code
+(later you will see how this is done for a block of code). Next, the ``omp parallel pragma`` creates a team of threads and directs each 
+thread to run the line ``printf(\nDuring...)`` in parallel. 
 
-  int main(int argc, char** argv) {
-
-      printf("\nBefore...\n");
-
-      #pragma omp parallel  //this line is now uncommented!
-      printf("\nDuring...");
-
-      printf("\n\nAfter...\n\n");
-
-      return 0;
-  }
-
-
-In the above example, the ``omp parallel pragma`` creates a team of threads and directs each thread to run the line ``printf(\nDuring...)`` in parallel.
 Thus, the string ``During`` is printed out a number of times that correspond to the number cores on the system (in this case, 4). Note that in OpenMP the 
 join is implicit and does not require a pragma directive. 
 
@@ -87,7 +78,9 @@ A common use of the fork-join pattern is to have each thread run the same block 
 .. _lst_sm_spmd_serial:
 
 .. activecode:: sm_spmd_serial
-   :language: cpp
+   :language: c
+   :compileargs: ['-Wall', '-ansi', '-pedantic', '-std=c99']
+   :linkargs: ['-fopenmp']
    :caption: SPMD (serial)
 
    #include <stdio.h>
@@ -134,7 +127,9 @@ Let's now run a version of the program with the ``omp parallel`` pragma uncommen
 .. _lst_sm_spmd_parallel:
 
 .. activecode:: sm_spmd_parallel
-   :language: cpp
+   :language: c
+   :compileargs: ['-Wall', '-ansi', '-pedantic', '-std=c99']
+   :linkargs: ['-fopenmp']
    :caption: SPMD (parallel)
 
    #include <stdio.h>
@@ -178,20 +173,36 @@ the single thread 0 after all the threads have completed and join back to the ma
 
 Re-running the program multiple times illustrates an important point about threaded programs: 
 the ordering of execution of statements between threads is *not* guaranteed. In fact, the order in which any set of 
-threads execute is not guaranteed, and is determined by the Operating System. This situation illustrates the concept 
+threads execute is not guaranteed, and is determined by the operating system. This situation illustrates the concept 
 of **non-determinism**, where an algorithm or program can have different outputs over multiple runs. While all 
 parallel algorithms have inherent non-deterministic properties, experienced programmers can *leverage* the non-deterministic
 execution to their advantage (e.g. run the code on multiple cores) and still get correct output. We will study several such 
 examples in the coming sections.  
 
-1.1.3 A Larger Program - Parallel Array
+1.1.3 A Larger Example - Parallel Array
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The fork-join and SPMD patterns are some of the most widely used for programming shared memory systems.
+In general, the fork-join pattern is used for **task parallelism**, or when a team of threads receive a 
+component of a larger problem and work together to come up with a solution. The SPMD pattern is commonly 
+used for **data parallelism** where a team of threads run the same program on different components of 
+*data* or *memory*. In this scenario, each thread does the exact same task -- the only difference is that 
+each thread is operating on a different unit of data or memory.
+
+As an example, discuss the process of array addition (sample unplugged activity). 
 
 
+.. mchoice:: sm_mc_tpdp_1
+    :correct: b
+    :answer_a: Task parallelism
+    :answer_b: Data parallelism
+    :answer_c: Neither
+    :feedback_a: Incorrect. Remember that in task parallelism, each thread is performing something different. 
+    :feedback_b: Correct! In this example, each thread is performing the same task on a different unit of memory.
+    :feedback_c: Actually, it is one of the options listed!
 
-Introduce the SPMD patternlet, and define what single program multiple data is, and how it relates 
-to the notion of data parallelism. As an example, 
-discuss the process of array addition (sample unplugged activity). 
+    Is populating an array in parallel an example of data parallelism or task parallelism? 
 
-Contrast "task parallelism" with "data parallelism" and mention how most parallel programs are 
-somewhere along the spectrum. Recognize that both strategies are ways to assign work to threads.
+
+The notions of "task parallelism" and "data parallelism" are two extremes on a spectrum. Most parallel programs
+fall somewhere along the spectrum. For now, it is sufficient to recognize that both fork-join and SPMD are valid 
+ways to assign work to threads.
