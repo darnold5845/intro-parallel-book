@@ -9,11 +9,11 @@ Table of Contents
 .. toctree::
    :maxdepth: 2
 
-   front_matter/title
+   front_matter/title.rst
 
-   introduction/intro.rst
+   introduction/toctree.rst
 
-   sharedMemory/index.rst
+   sharedMemory/toctree.rst
 
    messagePassing/index.rst
 
