@@ -1,10 +1,5 @@
 
 
-
-About Parallel Computing for Beginners
-:::::::::::::::::::::::::::::::::::::::
-
-
 Contributors
 ------------
 
@@ -14,7 +9,7 @@ Adams, Brown, Matthews and Shoop form the leadership team for CSinParallel, an N
 
 
 Contributing Authors
-*********************
+^^^^^^^^^^^^^^^^^^^^
 In addition, we would like to acknowledge the contributions of the following authors:
 
 * Joel C. Adams, Calvin University
@@ -26,15 +21,4 @@ In addition, we would like to acknowledge the contributions of the following aut
 * Elizabeth Shoop, Macelester College
 
 
-Acknowledgements
-----------------
 
-This work is sponsored by National Science Foundation (NSF) Collaborative Research Grants DUE-1822480/1822486/1855761. Collaborative Research: CSinParallel: Experiential Learning of Parallel and Distributed Computing through Sight, Sound, and Touch. 
-
-Copyright Statement
---------------------
-
-This work is licensed under a `Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License <https://creativecommons.org/licenses/by-nc-nd/4.0/>`_.
-
-
-.. include:: preface.rst
