@@ -179,8 +179,8 @@ parallel algorithms have inherent non-deterministic properties, experienced prog
 execution to their advantage (e.g. run the code on multiple cores) and still get correct output. We will study several such 
 examples in the coming sections.  
 
-1.1.3 A Larger Example - Parallel Array
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1.1.3 A Larger Example - Filling an Array
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The fork-join and SPMD patterns are some of the most widely used for programming shared memory systems.
 In general, the fork-join pattern is used for **task parallelism**, or when a team of threads receive a 
 component of a larger problem and work together to come up with a solution. The SPMD pattern is commonly 
@@ -188,7 +188,49 @@ used for **data parallelism** where a team of threads run the same program on di
 *data* or *memory*. In this scenario, each thread does the exact same task -- the only difference is that 
 each thread is operating on a different unit of data or memory.
 
-As an example, discuss the process of array addition (sample unplugged activity). 
+As an example, consider the process of filling an array of size *n* with elements from 1 .. *n* -1:
+
+.. youtube:: uLcypqARneE
+    :height: 315
+    :width: 560
+    :align: left
+
+The following snippet of C code is a serial implementation that populates an array with 50 million elements:
+
+.. activecode:: sm_arrayfill_serial
+   :language: c
+   :compileargs: ['-Wall', '-ansi', '-pedantic', '-std=c99']
+   :linkargs: ['-fopenmp']
+   :caption: Array Fill (serial)
+
+   #include <stdio.h>
+   #include <stdlib.h>
+
+   #define N 50000000 //size of the array
+
+   int main(void){
+
+        int * array = malloc(N*sizeof(int)); //declare array of size N
+        int i;
+
+        //populate array
+        for (i = 0; i < N; i++) {
+            array[i] = i+1;
+        }
+
+        printf("Done populating %d elements!", N);
+        return 0;
+   }
+
+Let's consider how we would parallelize a program like this. One way is to assign each thread a different 
+segment of the array, and have each thread populate its own component of the array. The following 
+video illustrates how 4 threads would populate an array (each thread is assigned a different color):
+
+.. youtube:: YV86Q0XFtJA
+    :height: 315
+    :width: 560
+    :align: left
+
 
 
 .. mchoice:: sm_mc_tpdp_1
@@ -206,3 +248,7 @@ As an example, discuss the process of array addition (sample unplugged activity)
 The notions of "task parallelism" and "data parallelism" are two extremes on a spectrum. Most parallel programs
 fall somewhere along the spectrum. For now, it is sufficient to recognize that both fork-join and SPMD are valid 
 ways to assign work to threads.
+
+
+1.1.3 Two new pragmas: ``omp for`` and ``omp parallel for``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
