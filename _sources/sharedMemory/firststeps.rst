@@ -54,7 +54,7 @@ Now *uncomment* the ``omp parallel pragma`` on line 8 and re-run the program.
     :answer_a: Nothing happens. It's the same output.
     :answer_b: The three strings ``Before``, ``During`` and ``After`` are printed multiple times.
     :answer_c: The string ``During`` is printed multiple times.
-    :answer_d: The strings ``During`` and ``After`` are printed multiple times.
+    :answer_d: The strings ``During`` and ``After`` are each printed multiple times.
     :feedback_a: Did you remember to uncomment the pragma on line 8? Try again.
     :feedback_b: This is not correct. Try uncommenting the pragma and re-running the code!
     :feedback_c: Correct! The string ``During`` is printed 4 times (do you know why?).
