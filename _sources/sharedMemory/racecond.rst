@@ -96,8 +96,8 @@ The following video illustrates how 4 threads would work together to approximate
 
 1.2.2 Parallel Integration - First Attempt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-One of the advantages of OpenMP is the ability to incrementally add parallelism to a program. Using what we learned about the fork-join pattern, let's 
-update the serial version of the integration program with OpenMP pragmas:
+One of the advantages of OpenMP is the ability to incrementally add parallelism to a program. Using what we learned about the fork-join pattern and available 
+pragams in the last section, let's update the serial version of the integration program with OpenMP pragmas:
 
 .. activecode:: rc_integration_par1
    :language: c
@@ -146,7 +146,8 @@ Our parallel implementation adds just two lines the serial code. First, we inclu
 access all the functions available to us in the OpenMP library. The second line is the inclusion of the ``omp parallel for`` 
 pragma on line 26. 
 
-The ``omp parallel for`` pragma is very similar to the ``omp parallel`` pragma we saw in the last section. The ``omp parallel for`` pragma:
+Recall that the ``omp parallel for`` pragma combines the functionality of the ``omp parallel``  and ``omp for`` pragmas we covered in the last section. 
+Specifically, the ``omp parallel for`` pragma:
 
 * creates a team of threads
 * assigns each thread a subset of iterations of the for loop
