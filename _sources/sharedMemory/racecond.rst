@@ -189,11 +189,76 @@ output of the serial program.
 
     Do you have any guesses on what could be causing the issue?  
 
-1.2.3 Introducing Race Conditions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Point out that this is not an issue with the program be task parallelism. In fact, the same thing can occur in a data parallel context.
+1.2.3 Returning to the Array Example
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Return back to array addition. Show that the same error occurs. 
+While some may find it tempting to point the finger at task parallelism for our incorrect result, the truth is that 
+we can get an incorrect result even when employing the SPMD pattern. Suppose we modify the populating array problem to 
+one of array addition. In other words, instead of simply populating an array with random values, we are adding up the 
+values in the array in parallel.  
+
+Here is a modified code snippet with the ``omp parallel for`` pragma placed in the correct place but commented out. Since 
+the sum of *n* elements from :math:`1 \ldots n` is :math:`\frac{n(n+1)}{2}`, we know the sum when *n* is 40 million 
+is a really long number: 800,000,020,000,000. 
+
+Here is an updated code snippet that has the pragma around the sum commented out. Running it should confirm that the 
+sum is the long value shown above.
+
+.. activecode:: rc_add_array
+   :language: c
+   :compileargs: ['-Wall', '-ansi', '-pedantic', '-std=c99']
+   :linkargs: ['-lm', '-fopenmp']
+   :caption: Integration (parallel - first attempt)
+
+   #include <stdio.h>
+   #include <math.h>
+   #include <stdlib.h>
+   #include <omp.h> //<--- added the omp header file
+
+   #define N 40000000 //size of the array
+
+   int main(void){
+
+       int * array = malloc(N*sizeof(int)); //declare array of size N
+       int i;
+
+       //populate array
+       #pragma omp parallel for  //<-- from our earlier example
+       for (i = 0; i < N; i++) {
+           array[i] = i+1;
+       }
+       printf("Done populating %d elements!\n", N);
+       printf("Summing elements together...\n");
+
+       long sum = 0;
+       //#pragma omp parallel for
+       for (i = 0; i < N; i++) {
+           sum+= array[i];
+       }
+       printf("Sum is: %ld\n", sum);
+
+       return 0;
+   }
+
+
+.. mchoice:: rc_mc_array_1
+    :correct: b
+    :answer_a: Yes, the program always prints out the correct result.
+    :answer_b: No, the result is different every time.  
+    :feedback_a: Incorrect. Did you remember to uncomment the pragma? Did you run the code a few times?
+    :feedback_b: Correct! Again, we are losing/overwriting values somewhere...
+
+    Now uncomment the pragama on line X and re-run the program a few times. Do you always get the correct result?
+
+To understand what is going on, we need to introduce a couple new terms.
+
+1.2.4 Race Conditions and Critical Sections
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Use the unplugged activity here to define what a race condition is:
+https://www.pdcunplugged.org/activities/arrayaddition/
+
+You  may need to come up with a clever video for this one too -_-
 
 Return to unplugged activity to show what a race condition is, and how critical sections can help.
 

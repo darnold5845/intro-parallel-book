@@ -226,11 +226,11 @@ Let's consider how we would parallelize a program like this. One way is to assig
 segment of the array, and have each thread populate its own component of the array. The following 
 video illustrates how 4 threads would populate an array (each thread is assigned a different color):
 
-.. youtube:: YV86Q0XFtJA
-    :height: 315
-    :width: 560
-    :align: left
+.. video:: video-fill-part
+   :controls:
+   :thumb: images/array-fill_thumb.png
 
+   https://d32ogoqmya1dw8.cloudfront.net/files/csinparallel/filling_array_parallel.mov
 
 
 .. mchoice:: sm_mc_tpdp_1
