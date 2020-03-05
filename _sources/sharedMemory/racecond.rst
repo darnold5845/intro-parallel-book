@@ -246,9 +246,9 @@ sum is the long value shown above.
     :answer_a: Yes, the program always prints out the correct result.
     :answer_b: No, the result is different every time.  
     :feedback_a: Incorrect. Did you remember to uncomment the pragma? Did you run the code a few times?
-    :feedback_b: Correct! Again, we are losing/overwriting values somewhere...
+    :feedback_b: Correct! Once again, the program is losing or overwriting values somewhere...
 
-    Now uncomment the pragama on line X and re-run the program a few times. Do you always get the correct result?
+    Now uncomment the pragama on line 22 and re-run the program a few times. Do you always get the correct result?
 
 To understand what is going on, we need to introduce a couple new terms.
 

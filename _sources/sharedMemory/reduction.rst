@@ -55,6 +55,8 @@ The reduction clause (``reduction(+: integral)``) indicates that the addition op
 Note also that the ``integral`` variable was also removed from the ``shared`` clause.
 
 
+1.3.1 How reduction actually works
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Explain what a reduction is and how that is an alternative.
 
 Introduce the reduction patternlet. 
