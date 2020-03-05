@@ -190,10 +190,11 @@ each thread is operating on a different unit of data or memory.
 
 As an example, consider the process of filling an array of size *n* with elements from 1 .. *n* -1:
 
-.. youtube:: uLcypqARneE
-    :height: 315
-    :width: 560
-    :align: left
+.. video:: video-fill-array
+   :controls:
+   :thumb: images/array-fill-par_thumb.png
+
+   https://d32ogoqmya1dw8.cloudfront.net/files/csinparallel/filling_array.mov
 
 The following snippet of C code is a serial implementation that populates an array with 50 million elements:
 
@@ -228,7 +229,7 @@ video illustrates how 4 threads would populate an array (each thread is assigned
 
 .. video:: video-fill-part
    :controls:
-   :thumb: images/array-fill_thumb.png
+   :thumb: images/array-fill-par_thumb.png
 
    https://d32ogoqmya1dw8.cloudfront.net/files/csinparallel/filling_array_parallel.mov
 
