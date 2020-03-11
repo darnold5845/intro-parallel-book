@@ -196,7 +196,7 @@ As an example, consider the process of filling an array of size *n* with element
 
    https://d32ogoqmya1dw8.cloudfront.net/files/csinparallel/filling_array.mov
 
-The following snippet of C code is a serial implementation that populates an array with 50 million elements:
+The following snippet of C code is a serial implementation that populates an array with 20 million elements:
 
 .. activecode:: sm_arrayfill_serial
    :language: c
@@ -207,7 +207,7 @@ The following snippet of C code is a serial implementation that populates an arr
    #include <stdio.h>
    #include <stdlib.h>
 
-   #define N 40000000 //size of the array
+   #define N 20000000 //size of the array
 
    int main(void){
 
@@ -268,7 +268,7 @@ the populate array program:
    #include <stdio.h>
    #include <stdlib.h>
 
-   #define N 40000000 //size of the array
+   #define N 20000000 //size of the array
 
    int main(void){
 
@@ -302,7 +302,7 @@ The following program illustrates this new pragma in action:
    #include <stdio.h>
    #include <stdlib.h>
 
-   #define N 40000000 //size of the array
+   #define N 20000000 //size of the array
 
    int main(void){
 
