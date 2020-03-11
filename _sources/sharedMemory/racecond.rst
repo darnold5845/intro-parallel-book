@@ -258,13 +258,20 @@ To understand what is going on, let's use an analogy to describe
 the process of adding an array in parallel.
 
 
-(insert video link)
+.. video:: video-racecond12
+   :controls:
+   :thumb: images/race_conditions1_thumb.png
+
+   https://d32ogoqmya1dw8.cloudfront.net/files/csinparallel/raceconditions1-2.mov.mov
 
 To understand what is going on, we need to define a few new terms, specifically **race condition** 
 **critical section**, and **lock**. Watch the following video to learn what these terms mean:
 
-(insert second video link)
+.. video:: video-racecond3
+   :controls:
+   :thumb: images/race_conditions3_thumb.png
 
+   https://d32ogoqmya1dw8.cloudfront.net/files/csinparallel/raceconditions3.mov.mov
 
 .. dragndrop:: dnd-rc-1
    :feedback: Feedback that is displayed if things are incorrectly matched.
@@ -278,7 +285,11 @@ To understand what is going on, we need to define a few new terms, specifically 
 
 Let's watch another video that explains how these mechanisms can help fix the issue in our program:
 
-(insert third video link here)
+.. video:: video-racecond4
+   :controls:
+   :thumb: images/race_conditions4_thumb.png
+
+   https://d32ogoqmya1dw8.cloudfront.net/files/csinparallel/raceconditions4.mov.mov
 
 The ``omp critical`` pragma allows a programmer to define a critical section. At an 
 initial glance, it is tempting to place the ``omp critical`` pragma around the 
