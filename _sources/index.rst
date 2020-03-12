@@ -16,7 +16,7 @@ Table of Contents
 
    sharedMemory/toctree.rst
 
-   messagePassing/index.rst
+   messagePassing/toctree.rst
 
    commonAlgorithms/index.rst
 
