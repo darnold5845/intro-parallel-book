@@ -32,6 +32,7 @@ run.py executes this program within mpirun using the number of processes given.
 
 - Run this code with 4 processes. Observe the deadlock and stop the program using ctrl-c.
 
+
 Dive into the code
 ++++++++++++++++++
 
@@ -59,13 +60,14 @@ Can you think of how to fix this problem?
 
    Since recv is a **blocking** function, we need to have some processes send first, while others correspondingly recv first from those who send first. This provides coordinated exchanges.
 
-Go to the next example to see the solution.
 
-Go through the patternlet related to this. 
+Visualizing Deadlock
++++++++++++++++++++++
+
+Put TSGL visualization of deadlock here.
 
 Discuss the dining philosophers problem here, and show TSGL visualization.
 
-Explain how to avoid this situation.
 
 
 Fixing Deadlock
