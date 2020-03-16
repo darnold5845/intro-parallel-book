@@ -35,3 +35,34 @@ Introduce Send and Receive and show a naieve implementation of integration using
 the send and receive can be used to send an array of values and calculate the sum. 
 
 May also want to talk about dealing with race conditions. 
+
+The Master-Worker Pattern
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Program file:** 01masterWorker.py
+
+**Example usage:**
+
+    python run.py ./01masterWorker.py 4
+
+Here the 4 signifies the number of processes to start up in mpi.
+
+run.py executes this program within mpirun using the number of processes given.
+
+**Exercises:**
+
+- Rerun, using varying numbers of processes from 1 through 8 (i.e., vary the last argument to run.py).
+- Explain what stays the same and what changes as the number of processes changes.
+
+Dive into the code
+^^^^^^^^^^^^^^^^^^
+
+What is different between this example and the previous one?
+
+.. literalinclude:: code/mpi4py/01masterWorker.py
+  :language: python
+  :lines: 23-
+
+The answer to the above question illustrates what we can do with this pattern: based on the process id, we can have one process carry out something different than the others. This concept is used a lot as a means to coordinate activities, where one process, often called the master, has the responsibility of handing out work and keeping track of results. We will see this in later examples.
+
+.. note:: By convention, the master coordinating process is usually the process number 0.
