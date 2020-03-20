@@ -102,3 +102,43 @@ processes chosen. Click the button below to see the solution.
     .. literalinclude:: code/mpi4py/populateArray.py
 
 
+Ring of passed messages
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Another pattern that appears in message passing programs is to use a ring of processes: messages get sent in this fashion:
+
+.. image:: images/ring.png
+
+
+When we have 4 processes, the idea is that process 0 will send data to process 1, who will receive it from process 0 and then send it to process 2, who will receive it from process 1 and then send it to process 3, who will receive it from process 2 and then send it back around to process 0.
+
+**Program file:** 07messagePassing5.py
+
+.. literalinclude:: code/mpi4py/07messagePassing3.py
+  :language: python
+  :lines: 22-
+
+**Exercise:**
+
+Run the above program varying the number of processes for *N* = 1 through 8/
+
+.. code-block:: bash
+
+   python run.py ./07messagePassing3.py N
+
+
+Compare the results from running the example to the code above. Make sure that you can trace how the code generates the output that you see.
+
+
+**Exercise:**
+
+.. mchoice:: mc-mp-ring
+   :answer_A: The last process with the highest id will have 0 as its destination because of the modulo (%) by the number of processes.
+   :answer_B: The last process sends to process 0 by default.
+   :answer_C: A destination cannot be higher than the highest process.
+   :correct: a
+   :feedback_A: Correct! Note that you must code this yourself.
+   :feedback_B: Processes can send to any other process, including the highest numbered one.
+   :feedback_C: This is technically true, but it is important to see how the code ensures this.
+
+   How is the finishing of the 'ring' completed, where the last process determines that it should send back to process 0?
