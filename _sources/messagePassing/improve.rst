@@ -1,4 +1,4 @@
-2.3 Other Communication Patterns
+2.4 Other Communication Patterns
 ---------------------------------
 
 There are many cases when a master process obtains or creates data that needs to be sent or 

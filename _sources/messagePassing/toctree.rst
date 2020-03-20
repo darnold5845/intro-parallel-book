@@ -17,6 +17,6 @@ Re-introduce the jigsaw puzzle analogy and discuss the distributed memory/proces
 
     firststeps.rst
     sendAndReceive.rst
-    improve.rst
     performance.rst
+    improve.rst
     forestfire.rst
