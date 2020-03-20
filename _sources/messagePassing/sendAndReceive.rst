@@ -36,11 +36,69 @@ The above program can be run using the following command:
 
 .. code-block:: bash
 
-   python run.py ./sendReceive 4
+   python run.py ./sendReceive.py 4
 
 
+Integration - First Attempt
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Introduce Send and Receive and show a naieve implementation of integration using MPI. Show how 
-the send and receive can be used to send an array of values and calculate the sum. 
+The code listing below illustrates how the integration example could be implemented with point-to-point communication:
 
-May also want to talk about dealing with race conditions. 
+.. literalinclude:: code/mpi4py/integration.py
+  :language: python
+
+The ``trapSum()`` function computes and sums up a set of *n* trapezoids with a particular range. The first part of the ``main()`` function 
+follows the SPMD pattern. Each process computes its local range of trapezoids and calls the 
+``trapSum()`` function to compute its local sum.
+
+
+The latter part of the ``main()`` function follows the master-worker pattern. Each worker process sends its local sum to the master 
+process. The master process generates a global array (called ``results``), receives the local sum from each worker process, and stores 
+the local sums in the ``results`` array. A final call to the ``sum()`` functon adds all the local sums together to produce the final result. 
+
+In later sections, we will see how to improve this example with other communication constructs. For now, ensure that you are comfortable 
+with the workings of this program. You can execute it with the command:
+
+.. code-block:: bash
+
+   python run.py ./integration.py 4
+
+(multiple choice about why master worker pattern must be used, and why results cannot be shared)
+
+
+Exercise - Populate an Array
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+As an exercise, let's use point-to-point communication to populate an array in parallel. The algorithm is as follows:
+
+* Each process computes its local range of values, and then calls a function that generates an array of just those values.
+* Each worker process sends its array to the master process. 
+* The master process generates a master array of the desired length, receives the local array from workers, and then populates 
+  the master array with the elements of the local arrays received.
+
+The following program is a partially filled in solution, with the algorithm shown in comments. 
+
+.. literalinclude:: code/mpi4py/tryPopulateArray.py
+  :language: python
+
+Fill in the rest of the program, save as ``tryPopulateArray.py`` and test your program using the following commands:
+
+.. code-block:: bash
+
+   python run.py ./tryPopulateArray.py 1
+   python run.py ./tryPopulateArray.py 2
+   python run.py ./tryPopulateArray.py 4
+
+Remember, in order for a parallel program to be correct, it should return the same value with every run, and regardless of the number of 
+processes chosen. Click the button below to see the solution.
+
+.. reveal:: reveal-popArray
+    :showtitle: Reveal Content
+    :hidetitle: Hide Content
+
+    The following program demonstrates how to implement the populateArray program. Make sure you try to solve the exercise yourself 
+    before looking at the solution!
+
+    .. literalinclude:: code/mpi4py/populateArray.py
+
+
