@@ -117,12 +117,31 @@ In this example, a 1-D array is created by the master, then scattered, using Sca
 Applying Gather to PopulateArray
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Let's use the ``Gather()`` function to simplify the code in the PopulateArray program. The revised code is shown below:
 
+**Program file:** PopulateArrayGather.py
 
-**Exercises:**
+.. literalinclude:: code/mpi4py/populateArrayGather.py
+  :language: python
 
-- Modify the Populate 
-- If you want to study the numpy part of the code, look up the numpy method ``linspace()`` used in ``genArray()``.
+Notice that the Send/Receive pattern used in the Point-to-Point communication section have now been replaced with 
+a single ``comm.Gather()`` statement. Additional code however is needed to initialize the global array that holds 
+the final results. 
+
+Run this code using the following command (N is the number of processes):
+
+.. code-block:: bash
+
+   python run.py ./populateArrayGather.py N
+
+Even as we increase the number of processes, the result stays the same. 
+
+**Exercises** 
+
+- Modify the PopulateArrayGather program to do array addition. Each processor should compute a local _sum_ of the array it produces. The global array should be 
+  the length of the number of processes, since the ``Gather()`` function is gathering a number of sums. 
+- Modify the Integration example frome earlier to use the ``Gather()`` function.
+
 
 Reduction
 ^^^^^^^^^
