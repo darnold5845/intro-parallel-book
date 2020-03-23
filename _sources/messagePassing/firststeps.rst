@@ -7,7 +7,10 @@ each other. On a distributed memory system (or cluster), one node is specified a
 known as **worker nodes**. MPI allows programmers to divide up a task and distribute a component to each worker or to some subset of workers. 
 Thus, each node can work on its own sub-task simultaneously.
 
-In this chapter, we use the Python library mpi4py to introduce message passing and MPI.
+In this chapter, we use the Python library *mpi4py* to introduce message passing and MPI. The mpi4py library of functions has several collective communication functions that are designed to work with arrays created using the Python library for numerical analysis computations called *NumPy*. As such, all examples involving lists employ NumPy arrays. Unlike Python lists, NumPy arrays hold only one type of data, and generally are faster and take up less space than 
+Python lists that contain data of only one type. NumPy arrays are specifically designed for fast mathematical computations and can be reshaped to form matrices 
+and other multi-dimensional data structures. A detailed discussion of numpy is beyond the scope of this book; for more about its features and available methods, we recommend consulting the `documentation <https://numpy.org/devdocs/>`_ and `available tutorials <https://www.python-course.eu/numpy.php>`_.
+
 
 The SPMD Pattern
 ^^^^^^^^^^^^^^^^

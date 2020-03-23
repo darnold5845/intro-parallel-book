@@ -76,13 +76,6 @@ There are often cases when each process can work on some portion of a larger dat
 
 This is so common in message passing parallel processing that there are two special collective communication functions called ``Scatter()`` and ``Gather()`` that handle this.
 
-
-The mpi4py library of functions has several collective communication functions that are designed to work with arrays created using the python library for numerical analysis computations called *numpy*.
-
-If you are unfamiliar with using numpy, and want to know more about its features and available methods, you will need to consult another tutorial for that. It should be possible to understand the following scatter, then gather example by observing the results that get printed, even if you are unfamiliar with the functions from numpy that are used to create the 1-D array.
-
-The numpy library has special data structures called arrays, that are common in other programming languages. A 1-dimensional array of integers can be envisioned very much like a list of integers, where each value in the array is at a particular index. 
-
 The mpi4py Scatter function, with a capital S, can be used to send portions of a larger array on the master to the workers, like this:
 
 .. image:: images/Scatter_array.png
@@ -115,27 +108,21 @@ In this example, a 1-D array is created by the master, then scattered, using Sca
    python run.py ./16ScatterGather.py N
 
 
-
 **Exercises:**
 
 - Run, using N = from 2 through 8 processes.
 - If you want to study the numpy part of the code, look up the numpy method ``linspace()`` used in ``genArray()``.
 
 
+Applying Gather to PopulateArray
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-Returning to the Array Example
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Update the array addition example using scatter() method and 
-introduce the gather() and reduce() functions.
 
-Have students choose which one makes more sense gather() or reduce().
+**Exercises:**
 
-Then have them modify the program with reduce() and gather().
-
-Have them time the performance of the two implementations.
-
-
+- Modify the Populate 
+- If you want to study the numpy part of the code, look up the numpy method ``linspace()`` used in ``genArray()``.
 
 Reduction
 ^^^^^^^^^
@@ -153,55 +140,63 @@ In this example, every process computes the square of (id+1). Then all those val
 
 **Program file:** 12reduction.py
 
+.. literalinclude:: code/mpi4py/12reduction.py
+  :language: python
+  :lines: 23-
+
+
+
 **Example usage:**
 
-  python run.py ./12reduction.py N
+.. code-block:: bash
 
-Here the N signifies the number of processes to start up in mpi.
+   python run.py ./12reduction.py N
 
-run.py executes this program within mpirun using the number of processes given.
 
 **Exercises:**
 
 - Run, using N = from 1 through 8 processes.
 - Try replacing MPI.MAX with MPI.MIN(minimum) and/or replacing MPI.SUM with MPI.PROD (product). Then save and run the code again.
+- Find the place in this code where the data computed on each process is being reduced to one value. Match the prints to the output you observe when you run it.
 
-Dive into the code
-++++++++++++++++++
 
-Find the place in this code where the data computed on each process is being reduced to one value. Match the prints to the output you observe when you run it.
-
-.. literalinclude:: code/mpi4py/12reduction.py
-  :language: python
-  :lines: 23-
 
 Reduction on a list of values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We can try reduction with lists of values, but the behavior matches Python semantics regarding lists.
 
+.. note:: There are two ways in Python that you might want to sum a set of lists from each process: 1) concatenating the elements together, or 2) summing the element at each location from each process and placing the sum in that location in a new list. In the latter case, the new list is the same length as the original lists on each process.
+
+
 **Program file:** 13reductionList.py
-
-**Example usage:**
-
-  python run.py ./13reductionList.py N
-
-Here the N signifies the number of processes to start up in mpi.
-
-run.py executes this program within mpirun using the number of processes given.
-
-**Exercises:**
-
-- Run, using N = from 1 through 4 processes.
-- Uncomment the two lines of runnable code that are commented in the main() function. Observe the new results and explain why the MPI.SUM (using the + operator underneath) behaves the way it does on lists, and what the new function called sumListByElements is doing instead.
-
-Dive into the code
-++++++++++++++++++
-
-In this code, try to explain what the function called sumListByElements does. If you are unfamiliar with the zip function, look up what it does.
 
 .. literalinclude:: code/mpi4py/13reductionList.py
   :language: python
   :lines: 27-
 
-.. note:: There are two ways in Python that you might want to sum a set of lists from each process: 1) concatenating the elements together, or 2) summing the element at each location from each process and placing the sum in that location in a new list. In the latter case, the new list is the same length as the original lists on each process.
+
+**Example usage:**
+
+.. code-block:: bash
+
+   python run.py ./13reductionList.py N
+
+
+**Exercises:**
+
+- Run, using N = from 1 through 4 processes.
+- Uncomment the two lines of runnable code that are commented in the main() function. Observe the new results and explain why the MPI.SUM (using the + operator underneath) behaves the way it does on lists, and what the new function called sumListByElements is doing instead.
+- In this code, try to explain what the function called sumListByElements does. If you are unfamiliar with the zip function, look up what it does.
+
+
+Returning to the Array Example
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Update the array addition example using scatter() method and 
+introduce the gather() and reduce() functions.
+
+Have students choose which one makes more sense gather() or reduce().
+
+Then have them modify the program with reduce() and gather().
+
+Have them time the performance of the two implementations.
