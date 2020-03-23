@@ -8,92 +8,67 @@ communication constructs specifically for those purposes.
 Broadcast
 ^^^^^^^^^
 
-Broadcast a dictionary
-~~~~~~~~~~~~~~~~~~~~~~
+A **broadcast** sends data from one process to all other processes. A common use of boradcasting is to send user input to all the processes in a 
+parallel program, as shown in the program below:
 
-**Program file:** 08broadcast.py
-
-**Example usage:**
-
-  python run.py ./08broadcast.py N
-
-Here the N signifies the number of processes to start up in mpi.
-
-run.py executes this program within mpirun using the number of processes given.
-
-**Exercise:**
-
-- Run, using N = from 1 through 8 processes.
-
-Dive into the code
-++++++++++++++++++
-
-Find the place in this code where the data is being broadcast to all of the processes. Match the prints to the output you observe when you run it.
-
-.. literalinclude:: code/mpi4py/08broadcast.py
-  :language: python
-  :lines: 23-
-
-Broadcast user input
-~~~~~~~~~~~~~~~~~~~~~~
 
 **Program file:** 09broadcastUserInput.py
-
-**Example usage:**
-
-python run.py ./09broadcastUserInput.py N dataString
-
-Here the N signifies the number of processes to start up in mpi, which must be greater than one. The dataString must be supplied and represents the string that will be broadcast from the master process to the workers.
-
-run.py executes this program within mpirun using the number of processes given and the dataString argument.
-
-For example, in this special instance, you can send a string with spaces and other special characters it it in it like this:
-
- python run.py ./09broadcastUserInput.py 2 "hello\ world\!"
-
- .. warning:: This program is unlike any of the others and takes in a second argument, as shown above.
-
-**Exercise:**
-
-- Run, using N = from 1 through 8 processes, with a string of your choosing.
-
-Dive into the code
-++++++++++++++++++
-
-Find the place in this code where the data is being broadcast to all of the processes. Match the prints to the output you observe when you run it.
 
 .. literalinclude:: code/mpi4py/09broadcastUserInput.py
   :language: python
   :lines: 29-
 
+To run the above example use the following command:
+
+.. code-block:: bash
+
+   python run.py ./09broadcastUserInput.py N dataString
+
+
+Here the ``N`` signifies the number of processes to start up in MPI, which must be greater than one. The ``dataString`` must be supplied and represents the string that will be broadcast from the master process to the workers.
+
+For example, in this special instance, you can send a string with spaces and other special characters it it in it like this:
+
+.. code-block:: bash
+
+   python run.py ./09broadcastUserInput.py 2 "hello\ world\!"
+
+
+**Exercise:**
+
+* Run, using N = from 1 through 8 processes, with a string of your choosing.
+
+* Find the place in this code where the data is being broadcast to all of the processes. Match the prints to the output you observe when you run it.
+
+
 
 Broadcast a list
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
-This just shows that other data structures can also be broadcast.
+It is also possible to broadcast more complex data structures, like a list. The following program illustrates how to broadcast a list to every 
+process:
 
 **Program file:** 11broadcastList.py
 
-**Example usage:**
+.. literalinclude:: code/mpi4py/11broadcastList.py
+  :language: python
+  :lines: 24-
 
-  python run.py ./11broadcastList.py N
 
-Here the N signifies the number of processes to start up in mpi.
+To run the above example use the following command (``N`` signifies the number of processes):
 
-run.py executes this program within mpirun using the number of processes given.
+.. code-block:: bash
+
+   python run.py ./11broadcastList.py N
+
 
 **Exercise:**
 
 - Run, using N = from 1 through 8 processes.
 
-Dive into the code
-++++++++++++++++++
 
 
 
-.. literalinclude:: code/mpi4py/11broadcastList.py
-  :language: python
-  :lines: 24-
 
 
 
