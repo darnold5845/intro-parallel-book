@@ -22,6 +22,7 @@
 #
 
 from mpi4py import MPI
+import numpy as np
 
 def main():
     comm = MPI.COMM_WORLD
@@ -33,13 +34,13 @@ def main():
 
         if id == 0:        # master
             #master: generate a dictionary with arbitrary data in it
-            data = list(range(numProcesses))
+            data = np.array(range(numProcesses))
             print("Master Process {} of {} on {} broadcasts {}"\
             .format(id, numProcesses, myHostName, data))
 
         else :
             # worker: start with empty data
-            data = []
+            data = None
             print("Worker Process {} of {} on {} starts with {}"\
             .format(id, numProcesses, myHostName, data))
 
