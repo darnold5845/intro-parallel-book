@@ -42,8 +42,8 @@ For example, in this special instance, you can send a string with spaces and oth
 
 
 
-Broadcast a list
-~~~~~~~~~~~~~~~~~
+Broadcasting a list
+~~~~~~~~~~~~~~~~~~~~
 
 It is also possible to broadcast more complex data structures, like a list. The following program illustrates how to broadcast a list to every 
 process:
@@ -69,22 +69,21 @@ To run the above example use the following command (``N`` signifies the number o
 
 
 
-
-
-
 Scatter and Gather
 ^^^^^^^^^^^^^^^^^^
 
 There are often cases when each process can work on some portion of a larger data structure. This can be carried out by having the master process maintain the larger structure and send parts to each of the worker processes, keeping part of the structure on the master. Each process then works on their portion of the data, and then the master can get the completed portions back.
 
-This is so common in message passing parallel processing that there are two special collective communication functions called scatter and gather that handle this.
+This is so common in message passing parallel processing that there are two special collective communication functions called ``Scatter()`` and ``Gather()`` that handle this.
 
 
 The mpi4py library of functions has several collective communication functions that are designed to work with arrays created using the python library for numerical analysis computations called *numpy*.
 
 If you are unfamiliar with using numpy, and want to know more about its features and available methods, you will need to consult another tutorial for that. It should be possible to understand the following scatter, then gather example by observing the results that get printed, even if you are unfamiliar with the functions from numpy that are used to create the 1-D array.
 
-The numpy library has special data structures called arrays, that are common in other programming languages. A 1-dimensional array of integers can be envisioned very much like a list of integers, where each value in the array is at a particular index. The mpi4py Scatter function, with a capital S, can be used to send portions of a larger array on the master to the workers, like this:
+The numpy library has special data structures called arrays, that are common in other programming languages. A 1-dimensional array of integers can be envisioned very much like a list of integers, where each value in the array is at a particular index. 
+
+The mpi4py Scatter function, with a capital S, can be used to send portions of a larger array on the master to the workers, like this:
 
 .. image:: images/Scatter_array.png
 
@@ -100,29 +99,28 @@ The reverse of this process can be done using the Gather function.
 
 In this example, a 1-D array is created by the master, then scattered, using Scatter (capital S). After each smaller array used by each process is changed, the Gather (capital G) function brings the full array with the changes back into the master.
 
-**Program file:** 16ScatterGather.py
-
-**Example usage:**
-
-  python run.py ./16ScatterGather.py N
-
-Here the N signifies the number of processes to start up in mpi.
-
-run.py executes this program within mpirun using the number of processes given.
-
-**Exercises:**
-
-- Run, using N = from 2 through 8 processes.
-- If you want to study the numpy part of the code, look up the numpy function linspace used in genArray().
-
-Dive into the code
-~~~~~~~~~~~~~~~~~~~
-
 .. note:: In the code below, note how all processes must call the Scatter and Gather functions.
+
+**Program file:** 16ScatterGather.py
 
 .. literalinclude:: code/mpi4py/16ScatterGather.py
   :language: python
   :lines: 24-
+
+
+**Example usage:**
+
+.. code-block:: bash
+
+   python run.py ./16ScatterGather.py N
+
+
+
+**Exercises:**
+
+- Run, using N = from 2 through 8 processes.
+- If you want to study the numpy part of the code, look up the numpy method ``linspace()`` used in ``genArray()``.
+
 
 
 
