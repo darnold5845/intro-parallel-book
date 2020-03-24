@@ -138,9 +138,10 @@ Even as we increase the number of processes, the result stays the same.
 
 **Exercises** 
 
-- Modify the PopulateArrayGather program to do array addition. Each processor should compute a local _sum_ of the array it produces. The global array should be 
+- Modify the PopulateArrayGather program to do array addition. Each processor should compute a local *sum* of the array it produces. The global array should be 
   the length of the number of processes, since the ``Gather()`` function is gathering a number of sums. 
 - Modify the Integration example frome earlier to use the ``Gather()`` function.
+
 
 
 Reduction
@@ -210,12 +211,57 @@ We can try reduction with lists of values, but the behavior matches Python seman
 
 
 Returning to the Array Example
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Update the array addition example using scatter() method and 
-introduce the gather() and reduce() functions.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Let's return to the problem of array addition, where the goal is to sum all the elements in an array together in parallel. We build on our earlier PopulateArray 
+program. After populating the array in parallel, we will use the ``scatter()`` method first to re-distribute the contents of the ``global_array`` to each 
+process:
 
-Have students choose which one makes more sense gather() or reduce().
+.. literalinclude:: code/mpi4py/arrayAddition1.py
+  :language: python
+  :lines: 45-55
 
-Then have them modify the program with reduce() and gather().
+Here, the ``local`` array is overwritten with the scattered results of ``global_array``. Each process then computes its local sum (stored in ``local_sum``). 
 
-Have them time the performance of the two implementations.
+
+Computing the final total using Gather
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+One way to compute the final total is to use a second invocation of the ``Gather()`` function as shown below:
+
+.. literalinclude:: code/mpi4py/arrayAddition1.py
+  :language: python
+  :lines: 45-70
+
+
+The master process allocates a new array called ``all_sums``, which is then populated by a second ``Gather()`` call. Finally, the master process computes 
+the final total by summing together all the subtotals located in the ``all_sums`` array. 
+
+
+Computing the final total using Reduce
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Recall that the ``Reduce()``  function combines all the local values using a common function (i.e. Sum, Max, Min, Prod). Since our goal is to add together 
+all the elments of our array, we can use the ``Reduce()`` function as follows:
+
+.. literalinclude:: code/mpi4py/arrayAddition2.py
+  :language: python
+  :lines: 45-64
+
+In addition to being shorter, this code snippet is much simpler than the one employing ``Gather``, as all the master process is doing is printing out the result.
+
+**Exercise:**
+
+.. mchoice:: arrayAdd_compare
+   :answer_A: The version using Gather is faster than the version using Reduce.
+   :answer_B: Both implementations perform about the same.
+   :answer_C: The version using Reduce is faster than the version using Gather.
+   :correct: c
+   :feedback_A: No. Ensure that the Gather version uses Gather to collect the sums. 
+   :feedback_B: No. Did you time each implementation?
+   :feedback_C: Correct! Not only is version employing Reduce shorter and simpler, it is much faster.
+
+   Add timing code and compare the performance of array Addition example employing Gather vs. Reduce. How do they compare?
+
+**Exercise:**
+
+Now modify the integration example to use ``Reduce()``. Compare the performance of the integration example with the earlier one that uses ``Gather()``. Which is faster?
