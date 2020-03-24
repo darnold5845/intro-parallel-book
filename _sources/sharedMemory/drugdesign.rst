@@ -83,7 +83,16 @@ Fill out the table by running the following series of tests:
 
 **Exercise 2:**
 
-(interactive question: which version is faster?)
+.. mchoice:: dd_mc
+    :correct: c
+    :answer_a: They take approximately the same time to run.
+    :answer_b: The static version performs better.
+    :answer_c: The dynamic version perofrms better.
+    :feedback_a: No. Did you try and run the two examples?
+    :feedback_b: Incorrect. Try re-running the code.
+    :feedback_c: Correct! The dynamic version of the code is significantly faster.
+
+    Time the static and dynamic versions of the drug design exemplar code on multiple threads (N=1..4). How does the runtime of the two versions compare?
 
 
 **Exercise 3:**
@@ -119,9 +128,11 @@ We will use Python to assist us with our speedup calculation. Fill in the code b
    print(dynamic_speedup)
 
 
-Static vs. Dynamic Scheduling
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Should point out that the two programs that students have played with thus far the work was statically scheduled. 
+Summary
+^^^^^^^
 
-Talk about why in the drug design example, dynamic scheduling is better. 
+In many cases, static scheduling is sufficient. However, there is an implicit assumption with static scheduling that 
+all components take about the same amount of time. However, if some components take longer than others, a *load balancing issue* 
+can arise. In the case of the drug design example, different ligands take longer to compute than others. Therefore, a dynamic 
+scheduling approach is better.
 
