@@ -23,23 +23,100 @@ We create the list of possible ligands in 2 ways:
 
 This means that we will have more ligands of length 2 or 3 and fewer of 4, 5, and 6, which are each declining in number. This has no relation to the real problem, but instead gives us some ligands that can be computed in a reasonable amount of time on a small cluster of single board computers.  This way you can try some experiments and be able to see the advantage of one implementation over the other.
 
-The image of the above Gamma distribution of lengths of ligands came from: `here <https://keisan.casio.com/exec/system/1180573216>`_, where we used a = 4.2 an b = 0.8.
+The image of the above Gamma distribution of lengths of ligands came from: `here <https://keisan.casio.com/exec/system/1180573216>`_, where we used a = 4.2 and b = 0.8.
 
 The Serial Version
 ^^^^^^^^^^^^^^^^^^^
 
-The code is too long to run interactively. Instead, we encourage you to download the code examples and run them on your machine. 
+The serial version of the code is accessible at this link: `dd_serial.cpp <http://selkie.macalester.edu/csinparallel/modules/DrugDesignInParallel/build/html/_downloads/dd_serial2.cpp>`_. 
+
+Compile the code locally on your machine using the following command:
+
+.. code-block:: bash
+
+   g++ -o -o dd_serial dd_serial.cpp
+
 To run the serial version of the program on your machine, run the following command:
 
+.. code-block:: bash
+
+   time -p ./dd_serial
 
 The Parallel Versions
 ^^^^^^^^^^^^^^^^^^^^^
 
-There are two parallel versions of the code that we make available to you...
+There are two parallel versions of the code available:
 
+* A version that uses *static scheduling* and is implemented in OpenMP (``drugdesign_static``)
+
+* A version that uses *dynamic scheduling* and is implemented in OpenMP (``drugdesign_dynamic``)
+
+We will discuss static vs dynamic scheduling in greater detail later. For now, let's compile the two version and run them:
+
+.. code-block:: bash
+
+   g++ -o -o drugdesign-static drugdesign-static.cpp -fopenmp
+   g++ -o -o drugdesign-dynamic drugdesign-dynamic.cpp -fopenmp 
+
+
+You can measure the run-time of a particular iteration using ``time -p`` and specifying a number of threads. For example, 
+to run the static version of the drug design implementation on 2 threads use the command:
+
+.. code-block:: bash
+
+   time -p ./drugdesign-static 2
+
+**Exercise 1:**
+
+Fill out the table by running the following series of tests:
+
+.. tabularcolumns:: |l|l|l|l|l|
+
++--------------------------+---------+-----------+-----------+----------+
+| Time (s)                 |1 Thread | 2 Threads | 3 Threads | 4 Threads|
++==========================+=========+===========+===========+==========+
+| drugdesign-static        |         |           |           |          |
++--------------------------+---------+-----------+-----------+----------+
+| drugdesign-dynamic       |         |           |           |          |
++--------------------------+---------+-----------+-----------+----------+
+
+
+**Exercise 2:**
 
 (interactive question: which version is faster?)
 
+
+**Exercise 3:**
+
+Recall that the equation for speedup is:
+
+.. math::
+
+    S_n = \frac{T_1}{T_n}
+
+Where :math:`T_1` is the time it takes to execute a program on one thread, :math:`T_n` is the time it takes to execute that same program on *n* threads, and :math:`S_n` is the associated speedup.
+
+We will use Python to assist us with our speedup calculation. Fill in the code below to compute the speedup for each version on each set of threads:
+
+.. activecode:: dd_speedup
+   :language: Python
+   :caption: Calculate Speedup
+
+   #lists holding measured times (floating point)
+   #TODO: Fill in arrays below (code will not compile otherwise!)
+   #            1 2 3 4
+   dd_static = [ , , , ]
+   dd_dynamic= [ , , , ]
+   
+   #compute speedup
+   static_speedup  = [round(dd_static[0]/dd_static[i],2)   for i in range(1,4)]
+   dynamic_speedup = [round(dd_dynamic[0]/dd_dynamic[i],2) for i in range(1,4)]
+
+   print("static speedup:")
+   print(static_speedup)
+
+   print("dynamic speedup:")
+   print(dynamic_speedup)
 
 
 Static vs. Dynamic Scheduling

@@ -32,7 +32,6 @@ Output like this can be obtained by running the single model like this:
 
 .. code-block:: bash
 
-   sh
    python fire_sequential_once.py 25 0.4
 
 
@@ -55,7 +54,6 @@ In this case, we ran 20 trials on a single Raspberry Pi 3B, with the probability
 
 .. code-block:: bash
 
-   sh
    python fire_sequential_simulate.py 10 0.1 20
 
 
@@ -78,7 +76,6 @@ This can be run like this:
 
 .. code-block:: bash
 
-   sh
    mpirun -np 4 -hostfile cluster_nodes --map-by node python fire_mpi_simulate.py 10 0.1 20
 
 
